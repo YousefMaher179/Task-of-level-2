@@ -76,7 +76,7 @@ h1 {
 
 .kanban__add-item {
   width: 100%;
-  padding: 1rem 16px;
+  padding: 1rem 1.6rem;
   color: white;
   background: rgba(0, 0, 0, 0.1);
   border: none;
@@ -106,14 +106,19 @@ h1 {
 }
 @media (max-width: 490px) {
   html {
-    font-size: 50%;
-  }
-  body {
+    font-size: 52%;
   }
   .kanban {
     flex-direction: column;
     gap: 5rem;
-    width: auto;
+  }
+  .kanban__column {
+    width: 100%;
+  }
+}
+@media (max-width: 450px) {
+  html {
+    font-size: 45%;
   }
 }
 @media (max-width: 420px) {
