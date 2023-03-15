@@ -45,7 +45,7 @@ class Column {
     this.elements.items.appendChild(toDropZone);
     // this Add Item in Root Div
     this.elements.addItem.addEventListener("click", () => {
-      const newItem = KanbanAPI.insertItem(id, "New Task");
+      const newItem = KanbanAPI.insertItem(id, "");
       this.renderItem(newItem);
     });
     KanbanAPI.getItems(id).forEach((item) => {
@@ -85,12 +85,12 @@ class Item {
     this.elements.remove = this.elements.root.querySelector(".remove");
 
     this.elements.root.dataset.id = id;
-    this.elements.input.textContent = content;
+    this.elements.input.value = content;
     this.content = content;
     this.elements.root.appendChild(bottomDropZone);
-
     const onBlur = () => {
-      const newContent = this.elements.input.textContent.trim();
+      this.elements.input.disabled = true;
+      const newContent = this.elements.input.value.trim();
       if (newContent == this.content) {
         return;
       }
@@ -99,22 +99,17 @@ class Item {
         content: this.content,
       });
     };
-    this.elements.input.addEventListener("click", () => {
-      this.elements.input.textContent = "";
-    });
-    this.elements.input.addEventListener("blur", onBlur);
-    this.elements.remove.addEventListener("click", () => {
-      const check = confirm("Are You Sure?");
-      if (check) {
-        KanbanAPI.deleteItem(id);
-        this.elements.input.removeEventListener("blur", onBlur);
-        this.elements.root.parentElement.removeChild(this.elements.root);
-      }
+    this.elements.edit.addEventListener("click", () => {
+      this.elements.input.disabled = false;
+      this.elements.input.focus();
     });
 
-    // this.elements.edit.addEventListener("click", () => {
-    //   this.elements.input.setAttribute("contenteditable", "true");
-    // });
+    this.elements.input.addEventListener("blur", onBlur);
+    this.elements.remove.addEventListener("click", () => {
+      KanbanAPI.deleteItem(id);
+      this.elements.input.removeEventListener("blur", onBlur);
+      this.elements.root.parentElement.removeChild(this.elements.root);
+    });
 
     //drag Items
     this.elements.root.addEventListener("dragstart", (e) => {
@@ -133,7 +128,7 @@ class Item {
     return range.createContextualFragment(`
     <div>
 			<div class="kanban__item" draggable="true">
-				<div class="kanban__item-input" contenteditable></div>
+				<input type="text" class="kanban__item-input" placeholder="New Task" value required ></input>
         <div class="icons">
         <ion-icon class="edit" name="create-outline"></ion-icon>
         <ion-icon class="remove" name="trash-outline"></ion-icon>
@@ -249,10 +244,12 @@ function read() {
 
   return JSON.parse(json);
 }
+
 //set data in local  storage
 function save(data) {
   localStorage.setItem("kanban-data", JSON.stringify(data));
 }
+
 //drag items in any column of tasks
 class DropZone {
   static createDropZone() {
