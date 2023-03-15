@@ -3,13 +3,14 @@
 </h1>
 
 <img src="Kanban.png">
-<h1>
+<h2>
 **This project is a Kanban-style to-do list application built using HTML, CSS, and JavaScript.
-</h1>
+</h2>
 
 <h3>
 **The application allows users to create, edit, and delete tasks,
- **and to move tasks between different stages of completion.
+ 
+**and to move tasks between different stages of completion.
 </h3>
 
 
