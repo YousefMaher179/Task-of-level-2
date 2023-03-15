@@ -58,6 +58,18 @@ h1 {
   font-size: 1.6rem;
   font-weight: 500;
 }
+.kanban__item-input {
+  border: none;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+.kanban__item-input:focus {
+  outline: 0;
+}
+.kanban__item-input::placeholder {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
 .edit,
 .remove {
   width: 2rem;
@@ -70,7 +82,7 @@ h1 {
 }
 
 .kanban__dropzone--active {
-  height: 2rem;
+  height: 3rem;
   background: rgba(0, 0, 0, 0.25);
 }
 
